@@ -44,8 +44,13 @@ function setUp() {
     fruit.setRandomColor();
     fruit.setRandomLocation(canvas);
 
+    //Canvas-Picture
+
     //GameMusic
     snakeMusic.play();
+
+    // hide color while playing
+    document.getElementById("color-select").style.visibility = "hidden";
 
     i = setInterval(() => {
       canvas.clean(); //feld freiräumen
@@ -54,14 +59,17 @@ function setUp() {
       snake.update(canvas);
       snake.draw(canvas);
       if (snake.x === fruit.x && snake.y === fruit.y) {
-        snake.addTailElement(
-          undefined,
-          undefined,
-          // rgbVerlauf[rgbVerlaufIndex % rgbVerlauf.length],
-          globalColor,
-          fruit.color
-        );
-        rgbVerlaufIndex++;
+        if (globalColor === "rainbow") {
+          snake.addTailElement(
+            undefined,
+            undefined,
+            rgbVerlauf[rgbVerlaufIndex % rgbVerlauf.length],
+            fruit.color
+          );
+          rgbVerlaufIndex++;
+        } else {
+          snake.addTailElement(undefined, undefined, globalColor, fruit.color);
+        }
         fruit.setRandomColor();
         fruit.setRandomLocation(canvas);
         updateScore(10);

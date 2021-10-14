@@ -25,7 +25,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const jwt = __importStar(require("jsonwebtoken"));
 const db_1 = require("../db");
-const shop_1 = require("./shop");
 const router = express_1.default.Router();
 router.get("/", (req, res) => {
     let claimsSet = jwt.verify(req.cookies["jwt-token"], "mysecret");
@@ -37,13 +36,6 @@ router.get("/", (req, res) => {
         else {
             res.status(404).end();
         }
-    });
-});
-router.post("/color", (req, res) => {
-    console.log("post at /color");
-    shop_1.queryPromise(`select itemname as item from items;`, db_1.con).then((result) => {
-        console.log(req.body);
-        res.redirect("/bag");
     });
 });
 exports.default = router;

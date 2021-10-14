@@ -38,7 +38,13 @@ function Snake(scale) {
     }
   };
   this.draw = function (canvas) {
-    canvas.draw(this.x, this.y, globalColor); //Kopf
+    if (globalColor === "rainbow") {
+      canvas.draw(this.x, this.y, "rgb(51, 204, 0)"); //Kopf
+    } else {
+      // canvas.draw(this.x, this.y, globalColor); //Kopf
+      let image = document.getElementById("picture_snake");
+      canvas.drawImage(image, this.x, this.y, 10, 10);
+    }
     for (let i = 0; i < this.tail; i++) {
       this.tailElems[i].drawTailElement(canvas);
     }
